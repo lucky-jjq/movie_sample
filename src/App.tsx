@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import ReactGA from "react-ga4";
 import { Adsense } from "@ctrl/react-adsense";
+import { Toaster } from 'react-hot-toast';
 
 import {
   Header,
@@ -23,6 +24,7 @@ import {
 const Catalog = lazy(() => import("./pages/Catalog"));
 const Home = lazy(() => import("./pages/Home"));
 const Detail = lazy(() => import("./pages/Detail"));
+const Watchlist = lazy(() => import("./pages/Watchlist"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => {
@@ -42,6 +44,7 @@ const App = () => {
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/watchlist" element={<Watchlist />} />
               <Route path="/:category/:id" element={<Detail />} />
               <Route path="/:category" element={<Catalog />} />
               <Route path="*" element={<NotFound />} />
@@ -58,6 +61,29 @@ const App = () => {
         responsive="true"
       />
       <Footer />
+      <Toaster 
+        position="bottom-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#1f1f1f',
+            color: '#fff',
+            border: '1px solid #374151',
+          },
+          success: {
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
     </>
   );
 };

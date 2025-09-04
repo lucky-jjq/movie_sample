@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { m } from "framer-motion";
 import { useParams } from "react-router-dom";
 
-import { Poster, Loader, Error, Section } from "@/common";
+import { Poster, Loader, Error, Section, WatchlistButton } from "@/common";
 import { Casts, Videos, Genre } from "./components";
 
 import { useGetShowQuery } from "@/services/TMDB";
@@ -54,6 +54,9 @@ const Detail = () => {
     genres,
     videos,
     credits,
+    release_date,
+    first_air_date,
+    vote_average,
   } = movie;
 
   const backgroundStyle = {
@@ -75,12 +78,27 @@ const Detail = () => {
             animate="show"
             className="text-gray-300 sm:max-w-[80vw] max-w-[90vw]  md:max-w-[520px] font-nunito flex flex-col lg:gap-5 sm:gap-4 xs:gap-[14px] gap-3 mb-8 flex-1 will-change-transform motion-reduce:transform-none"
           >
-            <m.h2
-              variants={fadeDown}
-              className={cn(mainHeading, " md:max-w-[420px] will-change-transform motion-reduce:transform-none")}
-            >
-              {title || name}
-            </m.h2>
+            <div className="flex items-center justify-between gap-4">
+              <m.h2
+                variants={fadeDown}
+                className={cn(mainHeading, " md:max-w-[420px] will-change-transform motion-reduce:transform-none")}
+              >
+                {title || name}
+              </m.h2>
+              <m.div variants={fadeDown} className="will-change-transform motion-reduce:transform-none">
+                <WatchlistButton
+                  id={Number(id)}
+                  title={title}
+                  name={name}
+                  poster_path={posterPath}
+                  release_date={release_date}
+                  first_air_date={first_air_date}
+                  vote_average={vote_average}
+                  type={category as 'movie' | 'tv'}
+                  size="lg"
+                />
+              </m.div>
+            </div>
 
             <m.ul
               variants={fadeDown}
